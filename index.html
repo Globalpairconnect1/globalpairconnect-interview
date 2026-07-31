@@ -132,4 +132,172 @@ margin-top:20px;
 
 <p>Please ensure you are in a quiet room with good lighting.</p>
 
-<p>Your interview consists of 10
+<p>Your interview consists of 10 interview questions.</p>
+
+<p>Each answer should be between 1 and 3 minutes.</p>
+
+<label>
+<strong>🌐 Choose your interview language</strong>
+</label>
+
+<select id="language">
+
+<option value="en-US">🇬🇧 English</option>
+
+<option value="fr-FR">🇫🇷 French</option>
+
+<option value="de-DE">🇩🇪 German</option>
+
+<option value="es-ES">🇪🇸 Spanish</option>
+
+</select>
+
+<button onclick="startInterview()">
+
+Start Interview
+
+</button>
+
+</section>
+
+<hr>
+
+<section id="identity">
+
+<h2>Identity Verification</h2>
+
+<label>Full Name</label>
+
+<input id="fullname" type="text">
+
+<label>Application ID</label>
+
+<input id="applicationid" type="text">
+
+<label>Email Address</label>
+
+<input id="email" type="email">
+
+<p>
+
+<b>
+
+Please hold your passport or national identification card in front of your camera for several seconds.
+
+</b>
+
+</p>
+
+<video id="camera" autoplay playsinline></video>
+
+<p class="recording">
+
+🔴 Camera Ready
+
+</p>
+
+<button onclick="continueInterview()">
+
+Continue
+
+</button>
+
+</section>
+
+<section id="interview">
+
+<h2>Interview</h2>
+
+<div class="progress">
+
+Question
+
+<span id="currentQuestion">
+
+1
+
+</span>
+
+of
+
+10
+
+</div>
+
+<div class="question-box">
+
+<h3 id="questionTitle">
+
+Question 1
+
+</h3>
+
+<p id="questionText">
+
+Loading question...
+
+</p>
+
+</div>
+
+<video id="recordPreview" autoplay muted playsinline></video>
+
+<div class="recording">
+
+🔴 Recording Indicator
+
+</div>
+
+<div class="timer">
+
+Time:
+
+<span id="timer">
+
+00:00
+
+</span>
+
+</div>
+
+<button onclick="startRecording()">
+
+Record
+
+</button>
+
+<button onclick="stopRecording()">
+
+Stop
+
+</button>
+
+<button onclick="nextQuestion()">
+
+Next Question
+
+</button>
+
+</section>
+
+<section id="finish">
+
+<h2>
+
+Interview Complete
+
+</h2>
+
+<p>
+
+Thank you for completing your Global Pair Connect Video Interview.
+
+</p>
+
+<p>
+
+Your interview has now ended.
+
+</p>
+
+</section>
