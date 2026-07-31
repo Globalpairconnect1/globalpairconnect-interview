@@ -3,126 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Global Pair Connect Video Interview</title>
 
-<style>
-
-body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#eef2f7;
-}
-
-header{
-background:#003366;
-color:white;
-padding:25px;
-text-align:center;
-}
-
-.container{
-width:90%;
-max-width:900px;
-margin:25px auto;
-background:white;
-padding:25px;
-border-radius:12px;
-box-shadow:0 0 15px rgba(0,0,0,.15);
-}
-
-h2{
-color:#003366;
-}
-
-label{
-display:block;
-margin-top:15px;
-font-weight:bold;
-}
-
-input,select{
-width:100%;
-padding:12px;
-margin-top:5px;
-border:1px solid #ccc;
-border-radius:6px;
-font-size:16px;
-}
-
-button{
-background:#0066cc;
-color:white;
-border:none;
-padding:12px 22px;
-margin-top:20px;
-border-radius:6px;
-cursor:pointer;
-font-size:16px;
-}
-
-button:hover{
-background:#004d99;
-}
-
-#camera{
-width:100%;
-max-height:420px;
-background:black;
-border-radius:10px;
-margin-top:15px;
-}
-
-#interview{
-display:none;
-}
-
-#finish{
-display:none;
-text-align:center;
-}
-
-.recording{
-color:red;
-font-weight:bold;
-font-size:18px;
-}
-
-.timer{
-font-size:20px;
-font-weight:bold;
-margin-top:10px;
-color:#003366;
-}
-
-.progress{
-font-weight:bold;
-color:#003366;
-margin-top:15px;
-}
-
-.question-box{
-background:#f5f8ff;
-padding:20px;
-border-radius:10px;
-margin-top:20px;
-}
-
-</style>
-
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header>
-
 <h1>Global Pair Connect</h1>
-
-<h3>Video Interview Portal</h3>
-
+<p>Video Interview Portal</p>
 </header>
 
-<div class="container">
+<!-- Welcome Screen -->
 
 <section id="welcome">
 
@@ -132,172 +25,122 @@ margin-top:20px;
 
 <p>Please ensure you are in a quiet room with good lighting.</p>
 
-<p>Your interview consists of 10 interview questions.</p>
+<p>Your interview consists of 10 questions.</p>
 
 <p>Each answer should be between 1 and 3 minutes.</p>
 
-<label>
-<strong>🌐 Choose your interview language</strong>
-</label>
-
-<select id="language">
-
-<option value="en-US">🇬🇧 English</option>
-
-<option value="fr-FR">🇫🇷 French</option>
-
-<option value="de-DE">🇩🇪 German</option>
-
-<option value="es-ES">🇪🇸 Spanish</option>
-
-</select>
-
-<button onclick="startInterview()">
-
-Start Interview
-
-</button>
+<button id="startBtn">Start Interview</button>
 
 </section>
 
-<hr>
+<!-- Identity Verification -->
 
-<section id="identity">
+<section id="identity" style="display:none;">
 
 <h2>Identity Verification</h2>
 
 <label>Full Name</label>
-
-<input id="fullname" type="text">
+<input type="text" id="name">
 
 <label>Application ID</label>
-
-<input id="applicationid" type="text">
+<input type="text" id="appID">
 
 <label>Email Address</label>
+<input type="email" id="email">
 
-<input id="email" type="email">
+<h3>Camera Preview</h3>
+
+<video id="camera" autoplay playsinline muted></video>
+
+<p class="live">🔴 Camera is Live</p>
 
 <p>
-
-<b>
-
-Please hold your passport or national identification card in front of your camera for several seconds.
-
-</b>
-
+Hold your passport or national identification card
+in front of the camera for a few seconds.
 </p>
 
-<video id="camera" autoplay playsinline></video>
-
-<p class="recording">
-
-🔴 Camera Ready
-
-</p>
-
-<button onclick="continueInterview()">
-
-Continue
-
-</button>
+<button id="continueBtn">Continue</button>
 
 </section>
 
-<section id="interview">
+<!-- Interview -->
 
-<h2>Interview</h2>
+<section id="interview" style="display:none;">
 
-<div class="progress">
+<h2>Video Interview</h2>
 
-Question
-
-<span id="currentQuestion">
-
-1
-
-</span>
-
-of
-
-10
-
-</div>
-
-<div class="question-box">
-
-<h3 id="questionTitle">
-
-Question 1
-
+<h3 id="progress">
+Question 1 of 10
 </h3>
-
-<p id="questionText">
-
-Loading question...
-
-</p>
-
-</div>
-
-<video id="recordPreview" autoplay muted playsinline></video>
-
-<div class="recording">
-
-🔴 Recording Indicator
-
-</div>
 
 <div class="timer">
 
 Time:
-
-<span id="timer">
-
+<span id="time">
 00:00
-
 </span>
 
 </div>
 
-<button onclick="startRecording()">
+<video id="preview" autoplay playsinline muted></video>
 
-Record
+<p class="recording">
+🔴 Recording
+</p>
 
+<h3 id="question">
+
+Tell us about yourself.
+
+</h3>
+
+<div class="buttons">
+
+<button id="recordBtn">
+Start Recording
 </button>
 
-<button onclick="stopRecording()">
-
+<button id="stopBtn">
 Stop
-
 </button>
 
-<button onclick="nextQuestion()">
-
+<button id="nextBtn">
 Next Question
-
 </button>
 
+</div>
+
 </section>
 
-<section id="finish">
+<!-- Finish -->
 
-<h2>
+<section id="finish" style="display:none;">
 
-Interview Complete
-
-</h2>
+<h2>Interview Complete</h2>
 
 <p>
 
-Thank you for completing your Global Pair Connect Video Interview.
+Thank you for completing your Global Pair Connect
+Video Interview.
 
 </p>
 
 <p>
 
-Your interview has now ended.
+Your interview has been successfully completed.
+
+</p>
+
+<p>
+
+Our recruitment team will review your interview
+and contact you with the next steps.
 
 </p>
 
 </section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
