@@ -1,146 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Pair Connect Video Interview</title>
-
-<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<header>
-<h1>Global Pair Connect</h1>
-<p>Video Interview Portal</p>
-</header>
-
-<!-- Welcome Screen -->
-
-<section id="welcome">
-
-<h2>Welcome</h2>
-
-<p>Welcome to the Global Pair Connect Video Interview.</p>
-
-<p>Please ensure you are in a quiet room with good lighting.</p>
-
-<p>Your interview consists of 10 questions.</p>
-
-<p>Each answer should be between 1 and 3 minutes.</p>
-
-<button id="startBtn">Start Interview</button>
-
-</section>
-
-<!-- Identity Verification -->
-
-<section id="identity" style="display:none;">
-
-<h2>Identity Verification</h2>
-
-<label>Full Name</label>
-<input type="text" id="name">
-
-<label>Application ID</label>
-<input type="text" id="appID">
-
-<label>Email Address</label>
-<input type="email" id="email">
-
-<h3>Camera Preview</h3>
+<h2>Camera Preview</h2>
 
 <video id="camera" autoplay playsinline muted></video>
 
-<p class="live">🔴 Camera is Live</p>
-
-<p>
-Hold your passport or national identification card
-in front of the camera for a few seconds.
+<p style="color:red;font-weight:bold;">
+🔴 Camera is Live
 </p>
 
-<button id="continueBtn">Continue</button>
+<script>
 
-</section>
+async function startCamera(){
 
-<!-- Interview -->
+try{
 
-<section id="interview" style="display:none;">
+const stream = await navigator.mediaDevices.getUserMedia({
+video:true,
+audio:true
+});
 
-<h2>Video Interview</h2>
+document.getElementById("camera").srcObject = stream;
 
-<h3 id="progress">
-Question 1 of 10
-</h3>
+}catch(err){
 
-<div class="timer">
+alert("Please allow camera and microphone access.");
 
-Time:
-<span id="time">
-00:00
-</span>
+}
 
-</div>
+}
 
-<video id="preview" autoplay playsinline muted></video>
+startCamera();
 
-<p class="recording">
-🔴 Recording
-</p>
+function startInterview(){
 
-<h3 id="question">
+alert("Welcome to your Global Pair Connect Video Interview.");
 
-Tell us about yourself.
+}
 
-</h3>
-
-<div class="buttons">
-
-<button id="recordBtn">
-Start Recording
-</button>
-
-<button id="stopBtn">
-Stop
-</button>
-
-<button id="nextBtn">
-Next Question
-</button>
-
-</div>
-
-</section>
-
-<!-- Finish -->
-
-<section id="finish" style="display:none;">
-
-<h2>Interview Complete</h2>
-
-<p>
-
-Thank you for completing your Global Pair Connect
-Video Interview.
-
-</p>
-
-<p>
-
-Your interview has been successfully completed.
-
-</p>
-
-<p>
-
-Our recruitment team will review your interview
-and contact you with the next steps.
-
-</p>
-
-</section>
-
-<script src="script.js"></script>
-
-</body>
-</html>
+</script>
