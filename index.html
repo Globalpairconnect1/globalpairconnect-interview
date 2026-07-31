@@ -3,19 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Global Pair Connect Video Interview</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#eef2f7;
+}
+
+header{
+background:#003366;
+color:white;
+padding:25px;
+text-align:center;
+}
+
+.container{
+width:90%;
+max-width:900px;
+margin:25px auto;
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 0 15px rgba(0,0,0,.15);
+}
+
+h2{
+color:#003366;
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:6px;
+font-size:16px;
+}
+
+button{
+background:#0066cc;
+color:white;
+border:none;
+padding:12px 22px;
+margin-top:20px;
+border-radius:6px;
+cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#004d99;
+}
+
+#camera{
+width:100%;
+max-height:420px;
+background:black;
+border-radius:10px;
+margin-top:15px;
+}
+
+#interview{
+display:none;
+}
+
+#finish{
+display:none;
+text-align:center;
+}
+
+.recording{
+color:red;
+font-weight:bold;
+font-size:18px;
+}
+
+.timer{
+font-size:20px;
+font-weight:bold;
+margin-top:10px;
+color:#003366;
+}
+
+.progress{
+font-weight:bold;
+color:#003366;
+margin-top:15px;
+}
+
+.question-box{
+background:#f5f8ff;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
+}
+
+</style>
+
 </head>
 
 <body>
 
 <header>
+
 <h1>Global Pair Connect</h1>
-<p>Video Interview Portal</p>
+
+<h3>Video Interview Portal</h3>
+
 </header>
 
-<!-- Welcome Screen -->
+<div class="container">
 
 <section id="welcome">
 
@@ -25,122 +132,4 @@
 
 <p>Please ensure you are in a quiet room with good lighting.</p>
 
-<p>Your interview consists of 10 questions.</p>
-
-<p>Each answer should be between 1 and 3 minutes.</p>
-
-<button id="startBtn">Start Interview</button>
-
-</section>
-
-<!-- Identity Verification -->
-
-<section id="identity" style="display:none;">
-
-<h2>Identity Verification</h2>
-
-<label>Full Name</label>
-<input type="text" id="name">
-
-<label>Application ID</label>
-<input type="text" id="appID">
-
-<label>Email Address</label>
-<input type="email" id="email">
-
-<h3>Camera Preview</h3>
-
-<video id="camera" autoplay playsinline muted></video>
-
-<p class="live">🔴 Camera is Live</p>
-
-<p>
-Hold your passport or national identification card
-in front of the camera for a few seconds.
-</p>
-
-<button id="continueBtn">Continue</button>
-
-</section>
-
-<!-- Interview -->
-
-<section id="interview" style="display:none;">
-
-<h2>Video Interview</h2>
-
-<h3 id="progress">
-Question 1 of 10
-</h3>
-
-<div class="timer">
-
-Time:
-<span id="time">
-00:00
-</span>
-
-</div>
-
-<video id="preview" autoplay playsinline muted></video>
-
-<p class="recording">
-🔴 Recording
-</p>
-
-<h3 id="question">
-
-Tell us about yourself.
-
-</h3>
-
-<div class="buttons">
-
-<button id="recordBtn">
-Start Recording
-</button>
-
-<button id="stopBtn">
-Stop
-</button>
-
-<button id="nextBtn">
-Next Question
-</button>
-
-</div>
-
-</section>
-
-<!-- Finish -->
-
-<section id="finish" style="display:none;">
-
-<h2>Interview Complete</h2>
-
-<p>
-
-Thank you for completing your Global Pair Connect
-Video Interview.
-
-</p>
-
-<p>
-
-Your interview has been successfully completed.
-
-</p>
-
-<p>
-
-Our recruitment team will review your interview
-and contact you with the next steps.
-
-</p>
-
-</section>
-
-<script src="script.js"></script>
-
-</body>
-</html>
+<p>Your interview consists of 10
