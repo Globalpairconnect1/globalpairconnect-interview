@@ -90,7 +90,10 @@ speechSynthesis.cancel();
 
 let speech=new SpeechSynthesisUtterance(text);
 
-speech.lang="en-US";
+const language =
+document.getElementById("language").value;
+
+speech.lang = language;
 
 speech.rate=0.95;
 
