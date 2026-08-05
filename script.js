@@ -1,89 +1,43 @@
 const questions = [
-"Tell us about yourself.",
-"Why do you want to join Global Pair Connect?",
-"Describe your childcare experience.",
-"How do you handle stressful situations?",
-"Describe a difficult situation and how you solved it.",
-"Why should a host family choose you?",
-"How would you adapt to another culture?",
-"How do you manage your time?",
-"What are your strengths and weaknesses?",
-"Do you have any final comments?"
+"Tell us about yourself and explain why you would like to become an au pair.",
+"Describe your experience caring for children.",
+"Why do you want to live with a host family in Europe?",
+"Describe a challenging situation with a child and how you handled it.",
+"How would you manage homesickness while living abroad?",
+"How would you react if a child refused to follow your instructions?",
+"Describe what a normal working day as an au pair would look like.",
+"What personal qualities make you a good au pair?",
+"What would you do if you had a disagreement with your host family?",
+"Is there anything else you would like the Global Pair Connect team to know about you?"
 ];
 
 let currentQuestion = 0;
+let timer;
 let seconds = 0;
-let timer = null;
 
 const welcome = document.getElementById("welcome");
 const identity = document.getElementById("identity");
 const interview = document.getElementById("interview");
 const finish = document.getElementById("finish");
 
-const startBtn = document.getElementById("startBtn");
-const continueBtn = document.getElementById("continueBtn");
-const nextBtn = document.getElementById("nextBtn");
-const recordBtn = document.getElementById("recordBtn");
-const stopBtn = document.getElementById("stopBtn");
-
 const question = document.getElementById("question");
 const progress = document.getElementById("progress");
 const time = document.getElementById("time");
 
-startBtn.onclick = () => {
-    welcome.style.display = "none";
-    identity.style.display = "block";
-    startCamera();
-};
+document.getElementById("startBtn").onclick = startInterview;
+document.getElementById("continueBtn").onclick = beginQuestions;
+document.getElementById("nextBtn").onclick = nextQuestion;
 
-continueBtn.onclick = () => {
-    identity.style.display = "none";
-    interview.style.display = "block";
-    document.getElementById("preview").srcObject =
-        document.getElementById("camera").srcObject;
-};
+async function startInterview(){
 
-recordBtn.onclick = () => {
-    seconds = 0;
+welcome.style.display="none";
+identity.style.display="block";
 
-    if(timer) clearInterval(timer);
+speak("Welcome to the Global Pair Connect Video Interview. Please enter your details below.");
 
-    timer = setInterval(() => {
-        seconds++;
+startCamera();
 
-        let min = String(Math.floor(seconds/60)).padStart(2,"0");
-        let sec = String(seconds%60).padStart(2,"0");
-
-        time.innerHTML = min + ":" + sec;
-    },1000);
-};
-
-stopBtn.onclick = () => {
-    clearInterval(timer);
-};
-
-nextBtn.onclick = () => {
-
-    clearInterval(timer);
-
-    seconds = 0;
-    time.innerHTML = "00:00";
-
-    currentQuestion++;
-
-    if(currentQuestion >= questions.length){
-
-        interview.style.display = "none";
-        finish.style.display = "block";
-        return;
-
-    }
-
-    question.innerHTML = questions[currentQuestion];
-    progress.innerHTML =
-        "Question " + (currentQuestion+1) + " of 10";
-
-};
+}
 
 async function startCamera(){
 
@@ -94,12 +48,120 @@ video:true,
 audio:true
 });
 
-document.getElementById("camera").srcObject = stream;
+document.getElementById("camera").srcObject=stream;
+document.getElementById("preview").srcObject=stream;
 
-}catch(err){
+}catch(e){
 
-alert("Camera access denied.");
+alert("Please allow camera and microphone access.");
 
 }
+
+}
+
+function beginQuestions(){
+
+identity.style.display="none";
+interview.style.display="block";
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+progress.innerHTML="Question "+(currentQuestion+1)+" of 10";
+
+question.innerHTML=questions[currentQuestion];
+
+speak(
+"Question "+
+(currentQuestion+1)+". "+
+questions[currentQuestion]
+);
+
+startCountdown();
+
+}
+
+function speak(text){
+
+speechSynthesis.cancel();
+
+let speech=new SpeechSynthesisUtterance(text);
+
+speech.lang="en-US";
+
+speech.rate=0.95;
+
+speech.pitch=1;
+
+speechSynthesis.speak(speech);
+
+}
+
+function startCountdown(){
+
+let count=5;
+
+time.innerHTML="Starts in "+count;
+
+const countdown=setInterval(()=>{
+
+count--;
+
+time.innerHTML="Starts in "+count;
+
+if(count<=0){
+
+clearInterval(countdown);
+
+startTimer();
+
+}
+
+},1000);
+
+}
+
+function startTimer(){
+
+seconds=0;
+
+timer=setInterval(()=>{
+
+seconds++;
+
+let m=Math.floor(seconds/60);
+let s=seconds%60;
+
+time.innerHTML=
+String(m).padStart(2,"0")+":"+
+String(s).padStart(2,"0");
+
+},1000);
+
+}
+
+function nextQuestion(){
+
+clearInterval(timer);
+
+currentQuestion++;
+
+if(currentQuestion>=questions.length){
+
+interview.style.display="none";
+finish.style.display="block";
+
+speak(
+"Congratulations. You have successfully completed your Global Pair Connect interview. Thank you."
+);
+
+return;
+
+}
+
+showQuestion();
 
 }
