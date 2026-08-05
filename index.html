@@ -1,38 +1,132 @@
-<h2>Camera Preview</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<video id="camera" autoplay playsinline muted></video>
+<title>Global Pair Connect Interview Portal</title>
 
-<p style="color:red;font-weight:bold;">
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://lozlrdwvvbflxieqqgsv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_2h9ysrjJ4c4tv1eTv-Vreg_oH5rbmqy";
+
+window.supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+</script>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1>Global Pair Connect</h1>
+
+<p>Video Interview Portal</p>
+
+</header>
+
+<section id="welcome">
+
+<h2>Welcome</h2>
+
+<p>
+Welcome to the Global Pair Connect video interview.
+</p>
+
+<p>
+Please make sure you are alone in a quiet room with good lighting.
+</p>
+
+<p>
+The interview consists of 10 questions.
+</p>
+
+<p>
+Each answer should be between 1 and 3 minutes.
+</p>
+
+<button id="startBtn">
+Start Interview
+</button>
+
+</section>
+
+<section id="identity" style="display:none;">
+
+<h2>Identity Verification</h2>
+
+<label>Full Name</label>
+
+<input
+type="text"
+id="name"
+placeholder="Enter your full name"
+>
+
+<label>Application ID</label>
+
+<input
+type="text"
+id="appID"
+placeholder="Application ID"
+>
+
+<label>Email Address</label>
+
+<input
+type="email"
+id="email"
+placeholder="Email Address"
+>
+
+<label>Preferred Language</label>
+
+<select id="language">
+
+<option value="English">
+English
+</option>
+
+<option value="French">
+French
+</option>
+
+<option value="Spanish">
+Spanish
+</option>
+
+<option value="German">
+German
+</option>
+
+</select>
+
+<h3>Camera Preview</h3>
+
+<video
+id="camera"
+autoplay
+playsinline
+muted
+></video>
+
+<p class="live">
 🔴 Camera is Live
 </p>
 
-<script>
+<p>
+Hold your passport or national ID in front of the camera for a few seconds before continuing.
+</p>
 
-async function startCamera(){
+<button id="continueBtn">
+Continue
+</button>
 
-try{
-
-const stream = await navigator.mediaDevices.getUserMedia({
-video:true,
-audio:true
-});
-
-document.getElementById("camera").srcObject = stream;
-
-}catch(err){
-
-alert("Please allow camera and microphone access.");
-
-}
-
-}
-
-startCamera();
-
-function startInterview(){
-
-alert("Welcome to your Global Pair Connect Video Interview.");
-
-}
-
-</script>
+</section>
