@@ -1,1 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Global Pair Connect Interview Portal</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://lozlrdwvvbflxieqqgsv.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+window.supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+</script>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Global Pair Connect</h1>
+    <p>Video Interview Portal</p>
+</header>
+
+<section id="welcome">
+    <h2>Welcome</h2>
+
+    <p>Welcome to the Global Pair Connect interview.</p>
+
+    <button id="startBtn">Start Interview</button>
+</section>
+
+<section id="identity" style="display:none;">
+    <h2>Identity Verification</h2>
+
+    <input id="name" placeholder="Full Name">
+    <input id="appID" placeholder="Application ID">
+    <input id="email" placeholder="Email Address">
+
+    <select id="language">
+        <option>English</option>
+        <option>French</option>
+        <option>Spanish</option>
+        <option>German</option>
+    </select>
+
+    <video id="camera" autoplay playsinline muted></video>
+
+    <button id="continueBtn">Continue</button>
+</section>
+
+<section id="interview" style="display:none;">
+
+<h2 id="progress"></h2>
+
+<p id="question"></p>
+
+<p id="time">00:00</p>
+
+<video id="preview" autoplay playsinline muted></video>
+
+<button id="recordBtn">Start Recording</button>
+
+<button id="stopBtn" disabled>Stop Recording</button>
+
+<button id="nextBtn">Next Question</button>
+
+</section>
+
+<section id="finish" style="display:none;">
+
+<h2>Interview Complete</h2>
+
+<p>Thank you for completing your interview.</p>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
