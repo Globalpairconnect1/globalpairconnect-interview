@@ -140,7 +140,18 @@ and contact you with the next steps.
 
 </section>
 
-<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const SUPABASE_URL = "https://lozlrdwvvbflxieqqgsv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_2h9ysrjJ4c4tv1eTv-Vreg_oH5rbmqy";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+</script>
+
+<script src="script.js"></script>
 </body>
 </html>
