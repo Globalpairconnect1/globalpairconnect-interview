@@ -99,3 +99,79 @@ function beginInterview() {
     showQuestion();
 
 }
+// ======================================
+// PART 2 - Questions, Timer & Voice
+// ======================================
+
+function showQuestion() {
+
+    progress.textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    question.textContent = questions[currentQuestion];
+
+    speakQuestion(questions[currentQuestion]);
+
+    startCountdown();
+
+}
+
+function speakQuestion(text) {
+
+    speechSynthesis.cancel();
+
+    const speech = new SpeechSynthesisUtterance(text);
+
+    speech.lang = "en-US";
+    speech.rate = 0.95;
+    speech.pitch = 1;
+
+    speechSynthesis.speak(speech);
+
+}
+
+function startCountdown() {
+
+    let countdown = 5;
+
+    time.textContent = "Starts in " + countdown;
+
+    const interval = setInterval(() => {
+
+        countdown--;
+
+        time.textContent = "Starts in " + countdown;
+
+        if (countdown <= 0) {
+
+            clearInterval(interval);
+
+            startTimer();
+
+        }
+
+    }, 1000);
+
+}
+
+function startTimer() {
+
+    clearInterval(timer);
+
+    seconds = 0;
+
+    timer = setInterval(() => {
+
+        seconds++;
+
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+
+        time.textContent =
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(secs).padStart(2, "0");
+
+    }, 1000);
+
+}
