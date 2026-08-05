@@ -1,3 +1,4 @@
+alert("script.js loaded");
 // ======================================
 // GLOBAL PAIR CONNECT INTERVIEW SYSTEM
 // COMPLETE SCRIPT
