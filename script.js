@@ -1,105 +1,101 @@
+// ======================================
+// GLOBAL PAIR CONNECT INTERVIEW SYSTEM
+// Part 1
+// ======================================
+
+// ---------- Supabase ----------
+const supabase = window.supabaseClient;
+
+// ---------- Interview Questions ----------
 const questions = [
-"Tell us about yourself.",
-"Why do you want to join Global Pair Connect?",
-"Describe your childcare experience.",
-"How do you handle stressful situations?",
-"Describe a difficult situation and how you solved it.",
-"Why should a host family choose you?",
-"How would you adapt to another culture?",
-"How do you manage your time?",
-"What are your strengths and weaknesses?",
-"Do you have any final comments?"
+  "Tell us about yourself and explain why you would like to become an au pair.",
+  "Describe your experience caring for children.",
+  "Why do you want to live with a host family in Europe?",
+  "Describe a challenging situation with a child and how you handled it.",
+  "How would you manage homesickness while living abroad?",
+  "What would you do if a child refused to follow your instructions?",
+  "Describe what a normal working day as an au pair would look like.",
+  "What personal qualities make you a good au pair?",
+  "What would you do if you had a disagreement with your host family?",
+  "Is there anything else you would like the Global Pair Connect team to know about you?"
 ];
 
+// ---------- Variables ----------
 let currentQuestion = 0;
-let seconds = 0;
 let timer = null;
+let seconds = 0;
 
+let stream = null;
+let mediaRecorder = null;
+let recordedChunks = [];
+
+// ---------- HTML Elements ----------
 const welcome = document.getElementById("welcome");
 const identity = document.getElementById("identity");
 const interview = document.getElementById("interview");
 const finish = document.getElementById("finish");
 
-const startBtn = document.getElementById("startBtn");
-const continueBtn = document.getElementById("continueBtn");
-const nextBtn = document.getElementById("nextBtn");
-const recordBtn = document.getElementById("recordBtn");
-const stopBtn = document.getElementById("stopBtn");
+const camera = document.getElementById("camera");
+const preview = document.getElementById("preview");
 
 const question = document.getElementById("question");
 const progress = document.getElementById("progress");
 const time = document.getElementById("time");
 
-startBtn.onclick = () => {
+const nameInput = document.getElementById("name");
+const appIDInput = document.getElementById("appID");
+const emailInput = document.getElementById("email");
+const languageInput = document.getElementById("language");
+
+// ---------- Buttons ----------
+document.getElementById("startBtn").addEventListener("click", startInterview);
+document.getElementById("continueBtn").addEventListener("click", beginInterview);
+document.getElementById("recordBtn").addEventListener("click", startRecording);
+document.getElementById("stopBtn").addEventListener("click", stopRecording);
+document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+
+// ---------- Start Interview ----------
+async function startInterview() {
+
     welcome.style.display = "none";
     identity.style.display = "block";
-    startCamera();
-};
 
-continueBtn.onclick = () => {
-    identity.style.display = "none";
-    interview.style.display = "block";
-    document.getElementById("preview").srcObject =
-        document.getElementById("camera").srcObject;
-};
+    try {
 
-recordBtn.onclick = () => {
-    seconds = 0;
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+        });
 
-    if(timer) clearInterval(timer);
+        camera.srcObject = stream;
+        preview.srcObject = stream;
 
-    timer = setInterval(() => {
-        seconds++;
+    } catch (err) {
 
-        let min = String(Math.floor(seconds/60)).padStart(2,"0");
-        let sec = String(seconds%60).padStart(2,"0");
+        alert("Please allow access to your camera and microphone.");
+        console.error(err);
 
-        time.innerHTML = min + ":" + sec;
-    },1000);
-};
+    }
 
-stopBtn.onclick = () => {
-    clearInterval(timer);
-};
+}
 
-nextBtn.onclick = () => {
+// ---------- Continue ----------
+function beginInterview() {
 
-    clearInterval(timer);
+    if (
+        nameInput.value.trim() === "" ||
+        appIDInput.value.trim() === "" ||
+        emailInput.value.trim() === ""
+    ) {
 
-    seconds = 0;
-    time.innerHTML = "00:00";
-
-    currentQuestion++;
-
-    if(currentQuestion >= questions.length){
-
-        interview.style.display = "none";
-        finish.style.display = "block";
+        alert("Please complete all your details.");
         return;
 
     }
 
-    question.innerHTML = questions[currentQuestion];
-    progress.innerHTML =
-        "Question " + (currentQuestion+1) + " of 10";
+    identity.style.display = "none";
+    interview.style.display = "block";
 
-};
-
-async function startCamera(){
-
-try{
-
-const stream = await navigator.mediaDevices.getUserMedia({
-video:true,
-audio:true
-});
-
-document.getElementById("camera").srcObject = stream;
-
-}catch(err){
-
-alert("Camera access denied.");
-
-}
+    showQuestion();
 
 }
