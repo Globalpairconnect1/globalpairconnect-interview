@@ -223,3 +223,120 @@ String(secs).padStart(2,"0");
 },1000);
 
 }
+// ===============================
+// START RECORDING
+// ===============================
+
+function startRecording() {
+
+if (!stream) {
+alert("Camera is not ready.");
+return;
+}
+
+recordedChunks = [];
+
+mediaRecorder = new MediaRecorder(stream);
+
+mediaRecorder.ondataavailable = function(event) {
+
+if (event.data.size > 0) {
+recordedChunks.push(event.data);
+}
+
+};
+
+mediaRecorder.onstop = async function() {
+
+const videoBlob = new Blob(recordedChunks, {
+type: "video/webm"
+});
+
+const fileName =
+Date.now() + "_" +
+(nameInput.value || "candidate") +
+".webm";
+
+const { data, error } = await supabase.storage
+.from("interviews")
+.upload(fileName, videoBlob, {
+upsert: true,
+contentType: "video/webm"
+});
+
+if (error) {
+alert("Video upload failed.");
+console.error(error);
+return;
+}
+
+const { data: urlData } = supabase.storage
+.from("interviews")
+.getPublicUrl(fileName);
+
+await supabase
+.from("interviews")
+.insert([{
+full_name: nameInput.value,
+application_id: appIDInput.value,
+email: emailInput.value,
+language: "English",
+video_url: urlData.publicUrl,
+status: "Pending"
+}]);
+
+alert("Interview recording uploaded successfully.");
+
+};
+
+mediaRecorder.start();
+
+document.getElementById("recordBtn").disabled = true;
+document.getElementById("stopBtn").disabled = false;
+
+}
+
+// ===============================
+// STOP RECORDING
+// ===============================
+
+function stopRecording() {
+
+if (mediaRecorder &&
+mediaRecorder.state === "recording") {
+
+mediaRecorder.stop();
+
+document.getElementById("recordBtn").disabled = false;
+document.getElementById("stopBtn").disabled = true;
+
+}
+
+}
+
+// ===============================
+// NEXT QUESTION
+// ===============================
+
+function nextQuestion() {
+
+clearInterval(timer);
+
+currentQuestion++;
+
+if (currentQuestion >= questions.length) {
+
+interview.style.display = "none";
+finish.style.display = "block";
+
+speak(
+"Congratulations. You have completed your Global Pair Connect interview."
+);
+
+return;
+
+}
+
+showQuestion();
+
+}
