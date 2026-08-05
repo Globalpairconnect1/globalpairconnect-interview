@@ -1,19 +1,49 @@
+// ===============================
+// GLOBAL PAIR CONNECT
+// SUPABASE CONFIGURATION
+// ===============================
+
+const SUPABASE_URL = "https://lozlrdwvvbflxieqqgsv.supabase.co";
+
+const SUPABASE_ANON_KEY = "sb_publishable_2h9ysrjJ4c4tv1eTv-Vreg_oH5rbmqy";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+// ===============================
+// INTERVIEW QUESTIONS
+// ===============================
+
 const questions = [
 "Tell us about yourself and explain why you would like to become an au pair.",
 "Describe your experience caring for children.",
 "Why do you want to live with a host family in Europe?",
 "Describe a challenging situation with a child and how you handled it.",
 "How would you manage homesickness while living abroad?",
-"How would you react if a child refused to follow your instructions?",
+"What would you do if a child refused to follow your instructions?",
 "Describe what a normal working day as an au pair would look like.",
 "What personal qualities make you a good au pair?",
 "What would you do if you had a disagreement with your host family?",
 "Is there anything else you would like the Global Pair Connect team to know about you?"
 ];
 
+// ===============================
+// VARIABLES
+// ===============================
+
 let currentQuestion = 0;
-let timer;
 let seconds = 0;
+let timer;
+
+let stream;
+let mediaRecorder;
+let recordedChunks = [];
+
+// ===============================
+// HTML ELEMENTS
+// ===============================
 
 const welcome = document.getElementById("welcome");
 const identity = document.getElementById("identity");
@@ -24,34 +54,55 @@ const question = document.getElementById("question");
 const progress = document.getElementById("progress");
 const time = document.getElementById("time");
 
+const camera = document.getElementById("camera");
+const preview = document.getElementById("preview");
+
+const nameInput = document.getElementById("name");
+const appIDInput = document.getElementById("appID");
+const emailInput = document.getElementById("email");
+
+// ===============================
+// BUTTONS
+// ===============================
+
 document.getElementById("startBtn").onclick = startInterview;
 document.getElementById("continueBtn").onclick = beginQuestions;
+document.getElementById("recordBtn").onclick = startRecording;
+document.getElementById("stopBtn").onclick = stopRecording;
 document.getElementById("nextBtn").onclick = nextQuestion;
 
-async function startInterview(){
+// ===============================
+// START INTERVIEW
+// ===============================
 
-welcome.style.display="none";
-identity.style.display="block";
+async function startInterview() {
 
-speak("Welcome to the Global Pair Connect Video Interview. Please enter your details below.");
+welcome.style.display = "none";
+identity.style.display = "block";
 
-startCamera();
+await startCamera();
 
 }
 
-async function startCamera(){
+// ===============================
+// START CAMERA
+// ===============================
 
-try{
+async function startCamera() {
 
-const stream = await navigator.mediaDevices.getUserMedia({
-video:true,
-audio:true
+try {
+
+stream = await navigator.mediaDevices.getUserMedia({
+video: true,
+audio: true
 });
 
-document.getElementById("camera").srcObject=stream;
-document.getElementById("preview").srcObject=stream;
+camera.srcObject = stream;
+preview.srcObject = stream;
 
-}catch(e){
+}
+
+catch(error){
 
 alert("Please allow camera and microphone access.");
 
@@ -59,24 +110,35 @@ alert("Please allow camera and microphone access.");
 
 }
 
+// ===============================
+// BEGIN QUESTIONS
+// ===============================
+
 function beginQuestions(){
 
-identity.style.display="none";
-interview.style.display="block";
+identity.style.display = "none";
+interview.style.display = "block";
 
 showQuestion();
 
 }
 
+// ===============================
+// SHOW QUESTION
+// ===============================
+
 function showQuestion(){
 
-progress.innerHTML="Question "+(currentQuestion+1)+" of 10";
+progress.innerHTML =
+"Question " + (currentQuestion + 1) + " of 10";
 
-question.innerHTML=questions[currentQuestion];
+question.innerHTML =
+questions[currentQuestion];
 
 speak(
-"Question "+
-(currentQuestion+1)+". "+
+"Question " +
+(currentQuestion + 1) +
+". " +
 questions[currentQuestion]
 );
 
@@ -84,35 +146,42 @@ startCountdown();
 
 }
 
+// ===============================
+// SPEAK QUESTION
+// ===============================
+
 function speak(text){
 
 speechSynthesis.cancel();
 
-let speech=new SpeechSynthesisUtterance(text);
+const speech =
+new SpeechSynthesisUtterance(text);
 
-speech.lang="en-US";
-
-speech.rate=0.95;
-
-speech.pitch=1;
+speech.lang = "en-US";
+speech.rate = 0.95;
 
 speechSynthesis.speak(speech);
 
 }
 
+// ===============================
+// COUNTDOWN
+// ===============================
+
 function startCountdown(){
 
-let count=5;
+let count = 5;
 
-time.innerHTML="Starts in "+count;
+time.innerHTML = "Starts in " + count;
 
-const countdown=setInterval(()=>{
+const countdown = setInterval(()=>{
 
 count--;
 
-time.innerHTML="Starts in "+count;
+time.innerHTML =
+"Starts in " + count;
 
-if(count<=0){
+if(count <= 0){
 
 clearInterval(countdown);
 
@@ -124,44 +193,33 @@ startTimer();
 
 }
 
+// ===============================
+// TIMER
+// ===============================
+
 function startTimer(){
 
-seconds=0;
-
-timer=setInterval(()=>{
-
-seconds++;
-
-let m=Math.floor(seconds/60);
-let s=seconds%60;
-
-time.innerHTML=
-String(m).padStart(2,"0")+":"+
-String(s).padStart(2,"0");
-
-},1000);
-
-}
-
-function nextQuestion(){
+seconds = 0;
 
 clearInterval(timer);
 
-currentQuestion++;
+timer = setInterval(()=>{
 
-if(currentQuestion>=questions.length){
+seconds++;
 
-interview.style.display="none";
-finish.style.display="block";
+const minutes =
+Math.floor(seconds/60);
 
-speak(
-"Congratulations. You have successfully completed your Global Pair Connect interview. Thank you."
-);
+const secs =
+seconds % 60;
 
-return;
+time.innerHTML =
+String(minutes).padStart(2,"0")
++
+":"
++
+String(secs).padStart(2,"0");
 
-}
-
-showQuestion();
+},1000);
 
 }
