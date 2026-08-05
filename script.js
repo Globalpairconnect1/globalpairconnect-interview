@@ -1,3 +1,4 @@
+alert("Script loaded successfully");
 // ======================================
 // GLOBAL PAIR CONNECT INTERVIEW SYSTEM
 // Part 1
