@@ -1,113 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
+<head>
 
-body{
-background:#f5f7fb;
-color:#222;
-}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-header{
-background:#003366;
-color:white;
-text-align:center;
-padding:30px;
-}
+<title>Global Pair Connect Interview Portal</title>
 
-header h1{
-font-size:32px;
-margin-bottom:10px;
-}
+<link rel="stylesheet" href="style.css">
 
-header p{
-font-size:18px;
-}
+</head>
 
-section{
-max-width:800px;
-margin:40px auto;
-background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 4px 15px rgba(0,0,0,.1);
-}
+<body>
 
-h2{
-margin-bottom:20px;
-color:#003366;
-}
+<header>
 
-p{
-margin-bottom:15px;
-line-height:1.6;
-}
+<h1>Global Pair Connect</h1>
 
-input,
-select{
-width:100%;
-padding:12px;
-margin:10px 0;
-border:1px solid #ccc;
-border-radius:8px;
-font-size:16px;
-}
+<p>
+Professional Online Au Pair Video Interview Portal
+</p>
 
-video{
-width:100%;
-margin:20px 0;
-background:black;
-border-radius:10px;
-}
+</header>
 
-button{
-background:#003366;
-color:white;
-border:none;
-padding:14px 22px;
-border-radius:8px;
-cursor:pointer;
-font-size:16px;
-margin:8px 5px;
-}
+<section id="welcome">
 
-button:hover{
-background:#0055aa;
-}
+<h2>Welcome</h2>
 
-button:disabled{
-background:gray;
-cursor:not-allowed;
-}
+<p>
+Welcome to your Global Pair Connect online interview.
+</p>
 
-#progress{
-margin-bottom:15px;
-}
+<p>
+Before starting please ensure:
+</p>
 
-#question{
-font-size:20px;
-font-weight:bold;
-margin:20px 0;
-}
+<p>✅ You are alone in a quiet room.</p>
 
-#time{
-font-size:24px;
-font-weight:bold;
-color:red;
-}
+<p>✅ Your face is clearly visible.</p>
 
-@media(max-width:768px){
+<p>✅ Your passport or ID is ready.</p>
 
-section{
-margin:15px;
-padding:20px;
-}
+<p>✅ Your internet connection is stable.</p>
 
-header h1{
-font-size:26px;
-}
+<p>There are 10 interview questions.</p>
 
-}
+<p>Each answer should be between 1 and 3 minutes.</p>
+
+<div class="buttons">
+
+<button id="startBtn">
+Start Interview
+</button>
+
+</div>
+
+</section>
+
+<section id="identity" style="display:none;">
+
+<h2>Identity Verification</h2>
+
+<label>Full Name</label>
+
+<input
+type="text"
+id="name"
+placeholder="Enter your full name"
+>
+
+<label>Application ID</label>
+
+<input
+type="text"
+id="appID"
+placeholder="Application ID"
+>
+
+<label>Email Address</label>
+
+<input
+type="email"
+id="email"
+placeholder="Email Address"
+>
+
+<label>Preferred Language</label>
+
+<select id="language">
+
+<option>English</option>
+<option>French</option>
+<option>Spanish</option>
+<option>German</option>
+
+</select>
+
+<h3>Camera Preview</h3>
+
+<video
+id="camera"
+autoplay
+playsinline
+muted
+></video>
+
+<p>
+Please hold your passport or national ID in front of the camera before continuing.
+</p>
+
+<div class="buttons">
+
+<button id="continueBtn">
+Continue
+</button>
+
+</div>
+
+</section>
+
+<section id="interview" style="display:none;">
+
+<h2 id="progress">
+Question 1 of 10
+</h2>
+
+<div id="time">
+00:00
+</div>
+
+<video
+id="preview"
+autoplay
+playsinline
+muted
+></video>
+
+<h2 id="question">
+Question will appear here...
+</h2>
+
+<div class="buttons">
+
+<button id="recordBtn">
+🎥 Start Recording
+</button>
+
+<button
+id="stopBtn"
+disabled>
+⏹ Stop Recording
+</button>
+
+<button id="nextBtn">
+Next Question →
+</button>
+
+</div>
+
+</section>
+
+<section id="finish" style="display:none;">
+
+<h2>
+Interview Completed
+</h2>
+
+<p>
+Thank you for completing your Global Pair Connect interview.
+</p>
+
+<p>
+Our recruitment team will review your interview and contact you if you are shortlisted.
+</p>
+
+</section>
+
+<footer>
+
+© 2026 Global Pair Connect. All Rights Reserved.
+
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://lozlrdwvvbflxieqqgsv.supabase.co";
+
+const SUPABASE_ANON_KEY = "YOUR_ANON_PUBLIC_KEY_HERE";
+
+window.supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+</script>
+<script src="script.js"></script>
+
+</body>
+
+</html>
